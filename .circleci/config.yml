@@ -8,7 +8,7 @@ jobs:
     machine: true
     steps:
       - checkout
-      - node/install-packages
+      - run: npm install
       - run:
           name: Run tests
           command: npm test

@@ -9,6 +9,8 @@ jobs:
     docker:
       - image: 'lakoo/node-gcloud-docker'
     steps:
+      - setup_remote_docker:
+          version: 19.03.13
       - checkout
       - run: echo $GCLOUD_SERVICE_KEY
       - run: npm install

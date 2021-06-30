@@ -17,8 +17,8 @@ jobs:
     docker:
           - image: google/cloud-sdk
             auth:
-              username: mydockerhub-user
-              password: $DOCKERHUB_PASSWORD
+              username: _json_key
+              password: $GCLOUD_SERVICE_KEY
     steps:
       - checkout
       - run: echo $GCLOUD_SERVICE_KEY

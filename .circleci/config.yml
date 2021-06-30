@@ -7,7 +7,7 @@ orbs:
 jobs:
   build-and-test:  
     docker:
-          - image: google/cloud-sdk
+      - image: 'lakoo/node-gcloud-docker'
     steps:
       - checkout
       - run: echo $GCLOUD_SERVICE_KEY
@@ -21,5 +21,7 @@ jobs:
 workflows:
   sample: 
     jobs:
-      - build-and-test
+      - build-and-test:
+          context:
+            - "Google"
 

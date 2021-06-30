@@ -22,6 +22,4 @@ workflows:
   sample: 
     jobs:
       - build-and-test
-      - deploy:
-          context:
-            - Google
+

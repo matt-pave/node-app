@@ -1,3 +1,4 @@
+
 version: 2.1
 
 orbs:
@@ -5,24 +6,17 @@ orbs:
 
 jobs:
   build-and-test:  
-    machine: true
-    steps:
-      - checkout
-      - run: npm install
-      - run:
-          name: Run tests
-          command: npm test
-      - run: docker build . -t gcr.io/trove-equity/jenkins:"$CIRCLE_SHA1"
-  deploy:
     docker:
           - image: google/cloud-sdk
     steps:
       - checkout
       - run: echo $GCLOUD_SERVICE_KEY
+      - run: npm install
+      - run: docker build . -t gcr.io/trove-equity/jenkins:"$CIRCLE_SHA1"
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account $GCLOUD_SERVICE_ACCOUNT --key-file=-
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE} 
+          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
 
 workflows:
   sample: 

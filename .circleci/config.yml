@@ -7,7 +7,11 @@ orbs:
 jobs:
   build-and-test:  
     docker:
-      - image: 'lakoo/node-gcloud-docker'
+      - image: gcr.io/trove-equity/circle-tf-gcp-k8s:latest
+        auth:
+          username: "_json_key"
+          password: $GCLOUD_SERVICE_KEY
+
     steps:
       - setup_remote_docker:
           version: 19.03.13

@@ -17,7 +17,6 @@ jobs:
           version: 19.03.13
       - checkout
       - run: echo $GCLOUD_SERVICE_KEY > service_key.json
-      - run: export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/service_key.json" >> $BASH_ENV
       - run: npm install
       - run: docker build . -t gcr.io/trove-equity/node-app:"$CIRCLE_SHA1"
       - run: |

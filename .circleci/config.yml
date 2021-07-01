@@ -26,7 +26,7 @@ jobs:
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
       - run: gcloud auth configure-docker
       - run: docker push gcr.io/trove-equity/node-app:"$CIRCLE_SHA1"
-      - run: cd terraform && terraform init && terraform plan
+      - run: GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/service_key.json" bash -c "cd terraform && terraform init && terraform plan"
 
 workflows:
   sample: 

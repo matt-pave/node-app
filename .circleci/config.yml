@@ -25,9 +25,8 @@ jobs:
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
       - run: gcloud auth configure-docker
       - run: docker push gcr.io/trove-equity/node-app:"$CIRCLE_SHA1"
-      - run: cd terraform
-      - run: terraform plan
-
+      - run: cd terraform && terraform plan
+      
 workflows:
   sample: 
     jobs:

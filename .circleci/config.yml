@@ -28,8 +28,9 @@ jobs:
       - run: GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/service_key.json" bash -c "cd terraform && terraform init && terraform apply --auto-approve"
       - run: gcloud container clusters get-credentials node-app-cluster --zone us-central1-a
       - run: kubectl apply -f k8s/node-app-service.yaml
-      - run: kubectl apply -f k8s/node-app-deployment.yaml --image=gcr.io/trove-equity/node-app:"$CIRCLE_SHA1"
-
+      - run: kubectl set image k8s/node-app-deployment node-app=gcr.io/trove-equity/node-app:"$CIRCLE_SHA1"
+      - run: kubectl apply -f k8s/node-app-deployment.yaml
+      
 workflows:
   sample: 
     jobs:

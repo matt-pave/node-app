@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+
       - uses: RafikFarhad/push-to-gcr-github-action@v3.0.2
         with:
           gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
@@ -41,7 +41,8 @@ jobs:
           service_account_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
           export_default_credentials: true
       - run: |
-          gcloud -v
+          gcloud container clusters get-credentials node-app-cluster --zone us-central1-a
+          kubectl -v
 
       # - uses: danielr1996/kubectl-action@1.0.0
       #   with:

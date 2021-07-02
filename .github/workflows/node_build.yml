@@ -42,7 +42,7 @@ jobs:
           export_default_credentials: true
       - run: |
           gcloud container clusters get-credentials node-app-cluster --zone us-central1-a
-          kubectl set image deployment/node-app-deployment node-app=gcr.io/trove-equity/node-app
+          kubectl set image deployment/node-app-deployment node-app=gcr.io/trove-equity/node-app-gha
           kubectl apply -f k8s/node-app-deployment.yaml
 
       # - uses: danielr1996/kubectl-action@1.0.0

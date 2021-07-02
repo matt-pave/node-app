@@ -26,17 +26,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
       - uses: RafikFarhad/push-to-gcr-github-action@v3.0.2
         with:
           gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
           registry: gcr.io
           project_id: trove-equity
           image_name: node-app-gha
-      - run: |
-          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account poc-circleci@trove-equity.iam.gserviceaccount.com	 --key-file=-
-          gcloud --quiet config set project trove-equity
-          gcloud --quiet config set compute/zone us-central1-a
-      - uses: danielr1996/kubectl-action@1.0.0
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
         with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
-          args: apply -f deployment.yaml
+          project_id: trove-equity
+          service_account_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+          export_default_credentials: true
+      - run: |
+          gcloud -v
+
+      # - uses: danielr1996/kubectl-action@1.0.0
+      #   with:
+      #     kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      #     args: apply -f deployment.yaml

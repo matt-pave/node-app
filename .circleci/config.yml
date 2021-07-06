@@ -23,13 +23,14 @@ jobs:
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account $GCLOUD_SERVICE_ACCOUNT --key-file=-
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-      - run: gcloud auth configure-docker
-      - run: docker push gcr.io/trove-equity/node-app:"$CIRCLE_SHA1"
-      - run: GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/service_key.json" bash -c "cd terraform && terraform init && terraform apply --auto-approve"
-      - run: gcloud container clusters get-credentials node-app-cluster --zone us-central1-a
-      - run: kubectl apply -f k8s/node-app-service.yaml 
-      - run: kubectl set image deployment/node-app-deployment node-app=gcr.io/trove-equity/node-app:"$CIRCLE_SHA1" || echo "Deployment not yet created."
-      - run: kubectl apply -f k8s/node-app-deployment.yaml
+          gcloud auth configure-docker
+          docker push gcr.io/trove-equity/node-app:"$CIRCLE_SHA1"
+          GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/service_key.json" bash -c "cd terraform && terraform init && terraform apply --auto-approve"
+          gcloud container clusters get-credentials node-app-cluster --zone us-central1-a
+      - run: |
+          kubectl apply -f k8s/node-app-service.yaml 
+          kubectl set image deployment/node-app-deployment node-app=gcr.io/trove-equity/node-app:"$CIRCLE_SHA1" || echo "Deployment not yet created."
+          kubectl apply -f k8s/node-app-deployment.yaml
 
 workflows:
   sample: 

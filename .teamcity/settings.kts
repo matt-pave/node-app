@@ -53,6 +53,7 @@ object Build : BuildType({
                 source = file {
                     path = "Dockerfile"
                 }
+                namesAndTags = ["gcr.io/trove-equity/node-app:new"]
             }
         }
     }

@@ -1,5 +1,7 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 /*
@@ -45,6 +47,13 @@ object Build : BuildType({
                     path = "Dockerfile"
                 }
             }
+        }
+        script {
+            name = "NPM"
+            scriptContent = "npm install"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+            dockerPull = true
+            dockerImage = "node:current-alpine3.11"
         }
     }
 

@@ -55,6 +55,9 @@ object Build : BuildType({
                 }
                 namesAndTags = "gcr.io/trove-equity/node-app:new"
             }
+            commandType = push {
+                namesAndTags = "gcr.io/trove-equity/node-app:new"
+            }
         }
     }
 

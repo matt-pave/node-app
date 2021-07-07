@@ -41,19 +41,19 @@ object Build : BuildType({
     }
 
     steps {
-        dockerCommand {
-            commandType = build {
-                source = file {
-                    path = "Dockerfile"
-                }
-            }
-        }
         script {
             name = "NPM"
             scriptContent = "npm install"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
             dockerPull = true
             dockerImage = "node:current-alpine3.11"
+        }
+        dockerCommand {
+            commandType = build {
+                source = file {
+                    path = "Dockerfile"
+                }
+            }
         }
     }
 
